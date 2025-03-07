@@ -45,12 +45,12 @@ La compra de boletos de autobús en terminales físicas puede generar largas fil
 
 | Tecnología  | Versión |
 |------------|---------|
-| Java       | x.x.x   |
-| Spring Boot| x.x.x   |
-| Angular    | x.x.x   |
-| Firebase   | x.x.x   |
-| MongoDB    | x.x.x   |
-| Node.js    | x.x.x   |
+| Java       |   17    |
+| Spring Boot|  3.4.3  |
+| Angular    |   19    |
+| Firebase   | 13.31.0 |
+| MongoDB    |   6.0   |
+| Node.js    |  22.14  |
 
 ---
 
