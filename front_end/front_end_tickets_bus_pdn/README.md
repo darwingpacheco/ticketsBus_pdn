@@ -1,27 +1,58 @@
-# FrontEndTicketsBusPdn
+## 📌 Documentación del Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+### ⚙️ Configuración del Entorno y Ejecución
 
-## Development server
+#### 1. Requisitos Previos
+- **Node.js** (versión 22.24)
+- **Angular** (versión 19)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+#### 2. Instalación y Configuración
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/usuario/ticketsBus_pdn.git
+   ```
+2. Acceder al directorio del frontend:
+   ```bash
+   cd frontend
+   ```
+3. Instalar las dependencias necesarias:
+   ```bash
+   npm install
+   ```
+4. Ejecutar el frontend en modo desarrollo:
+   ```bash
+   ng serve
+   ```
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🛠️ Lenguajes de Programación y Framework
 
-## Build
+- **Lenguaje Principal:** TypeScript
+- **Framework Utilizado:** Angular
+- **Gestión de Dependencias:** NPM
+- **Autenticación:** Firebase Authentication
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🖥️ IDE Recomendado
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- **Visual Studio Code**
+- **WebStorm**
+- **IntelliJ IDEA** (con soporte para Angular)
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 📁 Rutas de Carpetas
 
-## Further help
+```
+/frontend
+│── src/app/                # Código fuente principal
+│── src/assets/             # Recursos estáticos (imágenes, estilos, etc.)
+│── src/environments/       # Configuraciones de entorno
+│── angular.json            # Configuración de Angular
+│── package.json            # Dependencias del proyecto
+│── README.md               # Documentación del frontend
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
