@@ -3,6 +3,7 @@
 ### ⚙️ Configuración del Entorno y Ejecución
 
 #### 1. Requisitos Previos
+
 - **Java** (versión x.x.x)
 - **Maven** (versión x.x.x)
 - **MongoDB** (versión x.x.x)
@@ -10,6 +11,7 @@
 - **Spring Boot** (versión x.x.x)
 
 #### 2. Instalación y Configuración
+
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/usuario/ticketsBus_pdn.git
@@ -47,9 +49,9 @@
 
 ```
 /backend
-│── src/main/java/com/ticketsbus/backend   # Código fuente principal
-│── src/main/resources                     # Archivos de configuración y properties
-│── src/test/java/com/ticketsbus/backend   # Pruebas unitarias
-│── pom.xml                                # Archivo de configuración de Maven
-│── README.md                              # Documentación del backend
+│── back_end                                               # Código fuente principal
+│── back_end/.mvn/wrapper/maven-wrapper.properties         # Archivos de configuración y properties
+│── back_end/README.md                                     # Documentación del backend
 ```
+
+
