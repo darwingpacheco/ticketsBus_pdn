@@ -4,11 +4,11 @@
 
 #### 1. Requisitos Previos
 
-- **Java** (versión x.x.x)
-- **Maven** (versión x.x.x)
-- **MongoDB** (versión x.x.x)
+- **Java** (versión 17)
+- **Maven** (versión 3.9.9)
+- **MongoDB** (versión 6.0)
 - **Firebase SDK**
-- **Spring Boot** (versión x.x.x)
+- **Spring Boot** (versión 3.4.3)
 
 #### 2. Instalación y Configuración
 
