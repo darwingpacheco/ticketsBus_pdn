@@ -52,14 +52,10 @@
 
 ```
 /frontend
-│── ticketsBus_pdn/front_end
-/front_end_tickets_bus_pdn/                # Código fuente principal
+│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn/                  # Código fuente principal
 
-│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn
-/angular.json           # Configuración de Angular
-│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn
-/package.json          # Dependencias del proyecto
-│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn
-/README.md              # Documentación del frontend
+│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn/angular.json      # Configuración de Angular
+│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn/package.json      # Dependencias del proyecto
+│── ticketsBus_pdn/front_end/front_end_tickets_bus_pdn/README.md         # Documentación del frontend
 ```
 
