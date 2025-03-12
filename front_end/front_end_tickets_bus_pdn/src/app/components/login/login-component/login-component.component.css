@@ -4,6 +4,7 @@
 {
   margin:auto;
   padding:auto;
+  font-family: sans-serif;
 }
 
 .txtRedes{
@@ -31,8 +32,7 @@
 }
 
 body, html {
-    background-color: #f0f2f5;
-    background-image: url("https://1.bp.blogspot.com/-fd1WXKk-TAc/XyqfngP4PiI/AAAAAAAAVMw/umQz3tkxtg43uPIy8W5og6gAkpCfjaTvACLcBGAsYHQ/w1563-h1563/bg-snell.png");
+    background-image: url('https://files.oaiusercontent.com/file-1wvi8JXYF7DiQTkjJ5DK6k?se=2025-03-12T04%3A15%3A45Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dbb7502b8-7824-4d49-9cf9-865cbb2aa279.webp&sig=ArA8Hc2m2hQKjpr1EMJPjOWn0AScKC2TBlZKumXuFE0%3D');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 100%;
@@ -153,7 +153,9 @@ a:focus {
 
 .brand-logo {
   margin-top: 0px;
-  margin-bottom: 35px;
+  margin-bottom: 12px;
+  justify-content: center;
+ display: flex;
 }
 
 /*--------------------*/
@@ -191,7 +193,6 @@ a:focus {
   width: 100%;
   padding: 25px;
 }
-
 .authfy-panel-left .brand-col .headline {
   display: table-cell;
   vertical-align: middle;
@@ -255,6 +256,7 @@ a:focus {
 
 .brand-col .social-buttons a > span {
   padding-left: 5px;
+  font-family:sans-serif ;
 }
 
 .panel-login {
