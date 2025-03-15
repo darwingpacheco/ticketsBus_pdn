@@ -5,7 +5,7 @@
 }
 
 .custom-body {
-    background-image: url('https://files.oaiusercontent.com/file-1wvi8JXYF7DiQTkjJ5DK6k?se=2025-03-12T04%3A15%3A45Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dbb7502b8-7824-4d49-9cf9-865cbb2aa279.webp&sig=ArA8Hc2m2hQKjpr1EMJPjOWn0AScKC2TBlZKumXuFE0%3D');
+    background-image: url('https://files.oaiusercontent.com/file-1wvi8JXYF7DiQTkjJ5DK6k?se=2025-03-14T23%3A48%3A01Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dbb7502b8-7824-4d49-9cf9-865cbb2aa279.webp&sig=L/ZCQt9qzSTBjL8DmmwJJXSZMw1m1e1sXOe0ovaEAqY%3D'); 
     color: rgb(7, 7, 7);
     height: 100vh; /* Para que el color cubra toda la pantalla */
     font-family: sans-serif;
@@ -15,20 +15,18 @@ h3 {
     padding: 15px;
     font-size: 26px; /* Tamaño más grande */
     font-weight: bold;
-    color: #050505;
+    color: #ffffff;
     text-transform: uppercase; /* Hace que "Registro" se vea más elegante */
     font-weight: 700;
     font-family: "Titillium Web", sans-serif;
-    color: #2d385e;
+    color: #ffffff;
 }
 
 .form-container {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    position: relative; /* Necesario para el pseudo-elemento */
+    padding: 50px;
+    border-radius: 10px;
     width: 500px;
-    backdrop-filter: blur(12px);
     text-align: center;
     transition: transform 0.1s ease-in-out;
     display: flex;
@@ -39,29 +37,73 @@ h3 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border: 2px solid rgba(162, 208, 255, 0.8); /* Borde azul inicial */
+    box-shadow: 0px 0px 15px rgba(172, 175, 179, 0.8); /* Efecto neón */
+}
+
+/* FONDO TRANSPARENTE SEPARADO */
+.form-container::before {
+    content: "";
+    position: absolute;
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37, 37, 37, 0.8); /* Fondo oscuro semi-transparente */
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    z-index: -1; /* Envía el fondo detrás del contenido */
+}
+
+.input-container {
+    position: relative;
+    width: 390px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 18px; /* Reducido el padding */
+    margin: 8px 0; /* Reducido el margen */
+    height: 60px; /* Altura más compacta */
+}
+
+.input-container i {
+    position: absolute;
+    left: 20px; /* Ajustado más cerca del borde */
+    font-size: 18px; /* Tamaño del ícono reducido */
+    color: #999;
 }
 
 .input-field {
     width: 100%;
-    padding: 12px;
-    margin: 12px 0;
+    height: 50px;
+    padding: 18px 18px 18px 60px; /* Espacio a la izquierda para el icono */
     border: none;
+    margin: 12px 0;
     border-radius: 8px;
-    background: rgba(220, 231, 241, 0.85);
+    font-size: 18px;
+    background: white !important; /* Asegura el fondo blanco */
+    color: black;
+    outline: none;
     transition: all 0.3s ease-in-out;
-    font-size: 16px;
     box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.1);
 }
 
+.input-field:focus::placeholder {
+    color: transparent; /* Desaparece al hacer clic */
+}
+
 .input-field:focus {
-    background:rgba(217, 235, 252, 0.85);
+    background:white !important;
     border: none;
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
 .submit-button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-top: 4px;
     background: #1e3c72;
     color: #fff;
@@ -78,8 +120,16 @@ h3 {
     transform: scale(1.05);
 }
 
-a{
+.account-link {
+    display: block;
+    margin-top: 20px; /* Más espacio debajo del botón */
+    font-size: 16px;
+    text-align: center;
+    color: rgb(74, 160, 247); /* Color original */
+    text-decoration: none; /* Sin subrayado */
+    transition: color 0.3s ease-in-out; /* Transición suave */
+}
 
-    padding: 15px;
-    margin: 10px;
+.account-link:hover {
+    color: rgb(175, 219, 255); /* Cambia a azul al pasar el mouse */
 }

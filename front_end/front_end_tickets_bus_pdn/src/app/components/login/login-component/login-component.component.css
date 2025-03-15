@@ -32,14 +32,13 @@
 }
 
 body, html {
-    background-image: url('https://files.oaiusercontent.com/file-1wvi8JXYF7DiQTkjJ5DK6k?se=2025-03-12T04%3A15%3A45Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dbb7502b8-7824-4d49-9cf9-865cbb2aa279.webp&sig=ArA8Hc2m2hQKjpr1EMJPjOWn0AScKC2TBlZKumXuFE0%3D');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 100%;
-    height: 100vh;
-    text-rendering: optimizeLegibility;
+  background-color: red !important;  /* Asegura que el color rojo se aplique */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  text-rendering: optimizeLegibility;
 }
-
 .dust-paarticle
 {
   position: absolute;
