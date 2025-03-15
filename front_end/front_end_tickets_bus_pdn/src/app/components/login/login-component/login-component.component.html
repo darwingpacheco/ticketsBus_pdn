@@ -40,16 +40,16 @@
                                         <h3 class="auth-title">Inicia sesión con tu cuenta</h3>
                                     </div>
                                     <br>
-                                    <form ngSubmit="onSubmit()" class="custom-form">
-                                        <div Class="'group-input'">
-                                            <input type="email" class="form-control email" formControlName="username" placeholder="Email" />
-                                        </div>
-                                        <div Class="'group-input'">
+                                    <form [formGroup]="loginForm" (ngSubmit)="send()" class="custom-form">
+                                        <div class="group-input">
+                                            <input type="email" class="form-control email" formControlName="email" placeholder="Email" />
+                                          </div>
+                                          <div class="group-input">
                                             <div class="pwdMask">
-                                                <input type="password" class="form-control password" formControlName="password" placeholder="Password" />
-                                                <span class="fa fa-eye-slash pwd-toggle"></span>
+                                              <input type="password" class="form-control password" formControlName="password" placeholder="Password" />
+                                              <span class="fa fa-eye-slash pwd-toggle"></span>
                                             </div>
-                                        </div>
+                                          </div>                                          
                                         <br>
                                         <button type="submit" class="btn btn-lg btn-primary">Enviar</button>
                                     </form>                                    
@@ -57,7 +57,7 @@
                                         <br>
                                         <a href="#">Olvidaste tu contraseña</a>
                                         <span class="separator"> | </span>
-                                        <a href="#" (click)="goToRegister($event)">Crea tu cuenta</a>
+                                        <a href="#" (click)="goToRegister($event)">Crea tu cuenta</a>
                                     </div>
                                 </div>
                             </div>
