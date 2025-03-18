@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service.service';
 
 @Component({
@@ -15,14 +15,24 @@ export class CreateAccountComponentsComponent {
   constructor(private fb: FormBuilder, private userService: AuthService) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
-      lastName: ['', Validators.required],
+      last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      document: ['', Validators.required],
       phone: ['', Validators.required],
-    });
+    },
+    { validator: this.passwordsMatchValidator }
+   );
   }
 
-  register() {
+  passwordsMatchValidator(group: AbstractControl) {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { passwordValidators : true };
+  }
+
+  validatePassword() {
     console.log("presionaste agregar");
     console.log("registerForm", this.registerForm.value);
     console.log("Formulario válido:", this.registerForm.valid);
@@ -37,7 +47,11 @@ export class CreateAccountComponentsComponent {
         }
       );
     } else {
-      alert('Formulario inválido');
+      if (this.registerForm.errors?.['passwordValidators']) {
+        alert('Las contraseñas no coinciden');
+      } else {
+        alert('Formulario inválido');
+      }
     }
   }
 }

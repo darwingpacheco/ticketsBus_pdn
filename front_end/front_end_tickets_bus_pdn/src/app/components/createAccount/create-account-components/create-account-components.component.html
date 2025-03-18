@@ -1,39 +1,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <body class="custom-body">
     <div class="form-container">
-        <form action="#" method="POST" onsubmit="return validatePassword()">
-            <h3 class="text">Crea tu cuenta</h3>
-        
+        <form [formGroup]="registerForm" (ngSubmit)="validatePassword()">
             <div class="input-container">
-                <i class="fas fa-user"></i>
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre" class="input-field" required>
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Nombre" class="input-field" formControlName="name" required>
+            </div>
+          
+            <div class="input-container">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Apellido" class="input-field" formControlName="last_name" required>
             </div>
 
             <div class="input-container">
                 <i class="fas fa-user"></i>
-              <input type="text" id="apellido" name="apellido" placeholder="Apellido" class="input-field" required>
-            </div>
-            
+                <input type="text" placeholder="Documento" class="input-field" formControlName="document" required>
+              </div>
+          
             <div class="input-container">
-                <i class="fas fa-phone"></i>
-                <input type="tel" id="celular" name="celular" class="input-field" placeholder="Celular" required>
+              <i class="fas fa-phone"></i>
+              <input type="tel" class="input-field" placeholder="Celular" formControlName="phone" required>
             </div>
-    
+          
             <div class="input-container">
-                <i class="fas fa-envelope"></i>
-                <input type="email" id="correo" name="correo" placeholder="Correo" class="input-field" required>
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="Correo" class="input-field" formControlName="email" required>
             </div>
-    
+          
             <div class="input-container">
-                <i class="fas fa-lock"></i>
-                <input type="password" id="password" name="password" placeholder="Contraseña" class="input-field" required>
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Contraseña" class="input-field" formControlName="password" required>
             </div>
-    
+          
             <div class="input-container">
-                <i class="fas fa-lock"></i>
-             <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirmar contraseña" class="input-field" required>
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Confirmar contraseña" class="input-field" formControlName="confirmPassword" required>
             </div>
-    
+          
             <p id="password-error" class="error-message"></p>
     
             <button type="submit" class="submit-button">Guardar</button>

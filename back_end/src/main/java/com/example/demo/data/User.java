@@ -14,14 +14,13 @@ import lombok.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int document;
+    private String document;
+
+    @Column(nullable = false)
+    private String last_name;
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
-    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -32,12 +31,20 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-    public int getDocument() {
+    public String getDocument() {
         return document;
     }
 
-    public void setDocument(int document) {
+    public void setDocument(String document) {
         this.document = document;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public String getName() {
@@ -46,14 +53,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
