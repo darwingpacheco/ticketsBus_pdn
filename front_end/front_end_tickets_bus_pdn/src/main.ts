@@ -7,6 +7,9 @@ import { LoginComponentComponent } from './app/components/login/login-component/
 import { importProvidersFrom } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateAccountComponentsComponent } from './app/components/createAccount/create-account-components/create-account-components.component';
+import { environment } from './environments/environments';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
@@ -20,6 +23,8 @@ bootstrapApplication(AppComponent, appConfig)
   
   bootstrapApplication(AppComponent, {
     providers: [
+      provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+      provideAuth(() => getAuth()),
       provideRouter(routes),
       provideHttpClient(),
       importProvidersFrom( ReactiveFormsModule),
