@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "agroapp-81377",
+    "tikets-bus-pdn": "tickets-bus-pdn",
+    "front_end_tickets_bus_pdn": "tickets-bus-pdn"
+  },
+  "targets": {},
+  "etags": {}
+}
