@@ -1,0 +1,69 @@
+<div class="auth-container">
+    <div class="auth-card">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="authfy-container col-xs-12 col-sm-10 col-md-8 col-lg-6 col-sm-offset-1 col-md-offset-2 col-lg-offset-3">
+                        <div class="col-sm-5 authfy-panel-left">
+                            <div class="brand-col">
+                                <div class="headline">
+                                    <div class="brand-logo">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/5087/5087607.png"
+                                            width="180" height="180" alt="brand-logo"/>
+                                    </div>
+                                    <p class="txtRedes">Accede rápidamente iniciando sesión con tus redes sociales.</p>
+                                    <div class="row social-buttons">
+                                        <div class="col-xs-4 col-sm-4 col-md-12">
+                                            <a class="btn btn-block btn-facebook">
+                                                <i class="fa fa-facebook"></i> <span class="hidden-xs hidden-sm">FACEBOOK</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-12">
+                                            <a class="btn btn-block btn-twitter">
+                                                <i class="fa fa-twitter"></i> <span class="hidden-xs hidden-sm">TWITTER</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-12">
+                                            <a class="btn btn-block btn-google">
+                                                <i class="fa fa-google-plus"></i> <span (click)="loginGoogle()"  class="hidden-xs hidden-sm">GOOGLE</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de inicio de sesión -->
+                        <div class="col-sm-7 authfy-panel-right">
+                            <div class="authfy-login">
+                                <div class="authfy-panel panel-login text-center active">
+                                    <div class="authfy-heading">
+                                        <h3 class="auth-title">Inicia sesión con tu cuenta</h3>
+                                    </div>
+                                    <br>
+                                    <form [formGroup]="loginForm" (ngSubmit)="send()" class="custom-form">
+                                        <div class="group-input">
+                                            <input type="email" class="form-control email" formControlName="email" placeholder="Email" />
+                                          </div>
+                                          <div class="group-input">
+                                            <div class="pwdMask">
+                                              <input type="password" class="form-control password" formControlName="password" placeholder="Password" />
+                                              <span class="fa fa-eye-slash pwd-toggle"></span>
+                                            </div>
+                                          </div>                                          
+                                        <br>
+                                        <button type="submit" class="btn btn-lg btn-primary">Enviar</button>
+                                    </form>                                    
+                                    <div>
+                                        <br>
+                                        <a href="#">Olvidaste tu contraseña</a>
+                                        <span class="separator"> | </span>
+                                        <a href="#" (click)="goToRegister($event)">Crea tu cuenta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

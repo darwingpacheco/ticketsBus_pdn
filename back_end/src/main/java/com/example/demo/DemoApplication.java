@@ -10,8 +10,8 @@ import java.io.IOException;
 public class DemoApplication {
 
 	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args );
 		startAngular();
-		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	private static void startAngular() {
