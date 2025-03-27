@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-account-components',
@@ -12,7 +13,7 @@ import { AuthService } from '../../../services/auth-service.service';
 export class CreateAccountComponentsComponent {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: AuthService) {
+  constructor(private fb: FormBuilder, private userService: AuthService, private location: Location) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -53,5 +54,9 @@ export class CreateAccountComponentsComponent {
         alert('Formulario inválido');
       }
     }
+  }
+
+  goBack() {
+    this.location.back(); // Regresa a la página anterior
   }
 }

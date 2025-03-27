@@ -507,3 +507,11 @@ a:focus {
 .custom-button:hover {
   background-color: #e2584d; /* Cambio de color al pasar el ratón */
 }
+
+.auth-container {
+  background-image: url('./autobus.png');
+  color: rgb(7, 7, 7);
+  height: 110vh; /* Para que el color cubra toda la pantalla */
+  font-family: sans-serif;
+}
+

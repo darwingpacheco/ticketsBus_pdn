@@ -5,9 +5,9 @@
 }
 
 .custom-body {
-    background-image: url('https://files.oaiusercontent.com/file-1wvi8JXYF7DiQTkjJ5DK6k?se=2025-03-14T23%3A48%3A01Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dbb7502b8-7824-4d49-9cf9-865cbb2aa279.webp&sig=L/ZCQt9qzSTBjL8DmmwJJXSZMw1m1e1sXOe0ovaEAqY%3D'); 
+    background-image: url('./Back.png');
     color: rgb(7, 7, 7);
-    height: 100vh; /* Para que el color cubra toda la pantalla */
+    height: 110vh; /* Para que el color cubra toda la pantalla */
     font-family: sans-serif;
 }
 
