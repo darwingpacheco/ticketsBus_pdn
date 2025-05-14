@@ -1,68 +1,40 @@
 package com.example.demo.controllers;
 
-import com.example.demo.services.FirebaseUserService;
+import com.google.api.client.auth.oauth2.TokenRequest;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200") // o "*", según tus necesidades
 @RestController
 @RequestMapping("/tests")
 public class controllerFirebase {
 
-    private static final Logger logger = LoggerFactory.getLogger(controllerFirebase.class);
-
-    @Autowired
-    private FirebaseUserService firebaseUserService;
-
     @PostMapping("/google")
     public ResponseEntity<?> authenticateWithGoogle(@RequestBody TokenRequests tokenRequest) {
-        logger.info(">>> Iniciando autenticación con Google...");
-        logger.debug("Token recibido: {}", tokenRequest.getToken());
-
         try {
+            // Verifica el token con Firebase
             FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(tokenRequest.getToken());
-            String uid = decodedToken.getUid();
+
+            String uid = decodedToken.getUid(); // Obtiene el UID del usuario en Firebase
             String email = decodedToken.getEmail();
 
-            logger.info(">>> Usuario autenticado. UID: {}, Email: {}", uid, email);
-
+            // Crear una respuesta JSON
             Map<String, String> response = new HashMap<>();
             response.put("message", "Usuario autenticado");
             response.put("email", email);
 
+            // Puedes devolver un token JWT propio o un mensaje personalizado
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            logger.error(">>> Error al verificar token de Google: {}", e.getMessage(), e);
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "Token inválido o expirado.");
             return ResponseEntity.status(401).body(errorResponse);
         }
     }
-
-    @GetMapping("/listUsersProvider/{provider}")
-    public ResponseEntity<List<Map<String, Object>>> getUsersByProvider(@PathVariable String provider) {
-        logger.info(">>> Endpoint /listUsersProvider/{} invocado", provider);
-
-        try {
-            List<Map<String, Object>> filteredUsers = firebaseUserService.getUsersByProvider(provider);
-            logger.info(">>> Usuarios obtenidos: {}", filteredUsers);
-            return ResponseEntity.ok(filteredUsers);
-        } catch (Exception e) {
-            logger.error(">>> Error al obtener usuarios por proveedor '{}': {}", provider, e.getMessage(), e);
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
 }
 
 // Clase para recibir el token en el request
