@@ -31,7 +31,8 @@ export class LoginComponentComponent {
       if (this.loginForm.valid) {
         this.userService.login(this.loginForm.value).subscribe(
           response => {
-            alert('Registro exitoso');
+            alert('Login exitoso');
+            this.router.navigate(['/menu']);
           },
           error => {
             alert('Error al registrar usuario: ' + error.error);
@@ -42,10 +43,12 @@ export class LoginComponentComponent {
       }
     }
 
-    loginGoogle(){
+    loginGoogle(event: Event){
       this.authService.loginWithGoogle()
         .then(userCredentials => {
           alert("Inicio de sesion exitoso ")
+          event.preventDefault(); 
+          this.router.navigate(['/menu']);
         })
         .catch(err => {
           alert("Ha ocurrido un error " + err)

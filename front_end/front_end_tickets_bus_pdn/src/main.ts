@@ -10,6 +10,7 @@ import { CreateAccountComponentsComponent } from './app/components/createAccount
 import { environment } from './environments/environments';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { MenuComponentComponent } from './app/components/menu-component/menu-component.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
@@ -18,6 +19,7 @@ bootstrapApplication(AppComponent, appConfig)
   const routes: Routes = [
     { path: 'login', component: LoginComponentComponent },
     { path: 'createAccount', component: CreateAccountComponentsComponent },
+    { path: 'menu', component: MenuComponentComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
   ];
   
