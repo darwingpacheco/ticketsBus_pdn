@@ -16,20 +16,18 @@ export class MenuComponentComponent {
 
   constructor(private authService: AuthService) {}
 
-  async login() {
-    try {
-      const response = await this.authService.loginWithProvider(this.selectedAuthMethod);
-      this.users = response || [];
-    } catch (error) {
-      console.error('Error en login:', error);
-    }
-  }
   
 onAuthMethodChange() {
   if (this.selectedAuthMethod === 'local') {
     this.authService.getLocalUsers().subscribe(users => this.users = users);
   } else {
-    this.users = [];
+    this.authService.getUsersByProvider(this.selectedAuthMethod).subscribe(
+      users => this.users = users,
+      error => {
+        console.error('Error al obtener usuarios por proveedor:', error);
+        this.users = [];
+      }
+    );
   }
 }
 

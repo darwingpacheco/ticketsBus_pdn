@@ -81,6 +81,10 @@ loginWithProvider(provider: string) {
     });
 }
 
+getUsersByProvider(provider: string) {
+  return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
+}
+
   getFirebaseUsersByProvider(provider: string) {
   return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
 }
