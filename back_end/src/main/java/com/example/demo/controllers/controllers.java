@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -38,5 +39,17 @@ public class controllers {
         } else {
             return ResponseEntity.badRequest().body("Credenciales incorrectas");
         }
+    }
+
+
+    @GetMapping("/allUsers")
+    public List<User> getAllUsers() {
+        return userService.findAll();
+    }
+
+    @DeleteMapping("/{document}")
+    public ResponseEntity<?> deleteUser(@PathVariable String document) {
+        userService.deleteById(document);
+        return ResponseEntity.ok().build();
     }
 }
