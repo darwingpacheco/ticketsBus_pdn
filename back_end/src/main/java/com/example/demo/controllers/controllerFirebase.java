@@ -35,6 +35,27 @@ public class controllerFirebase {
             return ResponseEntity.status(401).body(errorResponse);
         }
     }
+
+    @PostMapping("/facebook")
+    public ResponseEntity<?> authenticateWithFacebook(@RequestBody TokenRequests tokenRequest) {
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(tokenRequest.getToken());
+
+            String uid = decodedToken.getUid();
+            String email = decodedToken.getEmail();
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario autenticado con Facebook");
+            response.put("email", email);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Token inválido o expirado.");
+            return ResponseEntity.status(401).body(errorResponse);
+        }
+    }
+
 }
 
 // Clase para recibir el token en el request

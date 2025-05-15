@@ -42,8 +42,18 @@ export class LoginComponentComponent {
       }
     }
 
-    loginGoogle(){
+    loginGoogle(event: Event){
       this.authService.loginWithGoogle()
+        .then(userCredentials => {
+          alert("Inicio de sesion exitoso ")
+        })
+        .catch(err => {
+          alert("Ha ocurrido un error " + err)
+        })
+    }
+  
+    loginFacebook(){
+      this.authService.loginWithFacebook()
         .then(userCredentials => {
           alert("Inicio de sesion exitoso ")
         })
