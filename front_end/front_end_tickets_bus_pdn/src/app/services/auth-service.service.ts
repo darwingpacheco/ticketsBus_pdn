@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signOut, user, getAuth } from '@angular/fire/auth';
+import { Auth, signInWithPopup, linkWithCredential, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signOut, user, getAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -96,4 +96,9 @@ getUsersByProvider(provider: string) {
   deleteUser(document: string) {
     return this.http.delete(`http://localhost:8080/api/users/${document}`);
   }
+
+  updateUser(user: any) {
+  return this.http.put(`http://localhost:8080/api/users/${user.document}`, user);
+}
+
 }

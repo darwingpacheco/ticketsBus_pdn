@@ -30,6 +30,5 @@ bootstrapApplication(AppComponent, appConfig)
       provideRouter(routes),
       provideHttpClient(),
       importProvidersFrom( ReactiveFormsModule),
-    
     ]
   }).catch(err => console.error(err));

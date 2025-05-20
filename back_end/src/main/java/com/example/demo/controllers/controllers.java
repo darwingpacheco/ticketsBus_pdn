@@ -52,4 +52,23 @@ public class controllers {
         userService.deleteById(document);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/{document}")
+    public ResponseEntity<?> updateUser(@PathVariable String document, @RequestBody User updatedUser) {
+        Optional<User> userOptional = userService.findById(document);
+
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+            existingUser.setName(updatedUser.getName());
+            existingUser.setLast_name(updatedUser.getLast_name());
+            existingUser.setEmail(updatedUser.getEmail());
+            // No actualizar la contraseña ni el documento aquí
+
+            userService.save(existingUser);
+            return ResponseEntity.ok(existingUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+    }
+
 }

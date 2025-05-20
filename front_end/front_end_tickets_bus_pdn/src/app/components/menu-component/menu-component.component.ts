@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth-service.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-menu-component',
@@ -16,7 +17,6 @@ export class MenuComponentComponent {
 
   constructor(private authService: AuthService) {}
 
-  
 onAuthMethodChange() {
   if (this.selectedAuthMethod === 'local') {
     this.authService.getLocalUsers().subscribe(users => this.users = users);
@@ -38,8 +38,27 @@ onAuthMethodChange() {
     });
   }
 
-  editUser(user: any) {
-    // Lógica para editar (puede abrir un modal, o formulario aparte)
-    console.log('Editar usuario', user);
-  }
+  editingUser: any = null;
+
+editUser(user: any) {
+  this.editingUser = user; // No hagas copia
+}
+
+cancelEdit() {
+  this.editingUser = null;
+  this.onAuthMethodChange(); // recarga usuarios para descartar cambios
+}
+
+saveUser(user: any) {
+  this.authService.updateUser(user).subscribe(
+    updatedUser => {
+      this.editingUser = null;
+      this.onAuthMethodChange(); // recarga lista
+    },
+    error => {
+      console.error('Error al actualizar el usuario:', error);
+    }
+  );
+}
+
 }

@@ -34,4 +34,13 @@ public class UserService {
     public void deleteById(String document) {
         userRepository.deleteById(Long.valueOf(document));
     }
+
+    public Optional<User> findById(String document) {
+        return userRepository.findById(Long.valueOf(document));
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
 }
