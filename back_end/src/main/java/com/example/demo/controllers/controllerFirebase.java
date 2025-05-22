@@ -1,9 +1,12 @@
 package com.example.demo.controllers;
 
+import com.example.demo.data.User;
 import com.example.demo.services.FirebaseUserService;
+import com.example.demo.services.UserService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:4200") // o "*", según tus necesidades
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/tests")
 public class controllerFirebase {
@@ -23,6 +27,13 @@ public class controllerFirebase {
 
     @Autowired
     private FirebaseUserService firebaseUserService;
+    @Autowired
+    private UserService userService;
+
+    public controllerFirebase(FirebaseUserService firebaseUserService, UserService userService) {
+        this.firebaseUserService = firebaseUserService;
+        this.userService = userService;
+    }
 
     @PostMapping("/google")
     public ResponseEntity<?> authenticateWithGoogle(@RequestBody TokenRequests tokenRequest) {
@@ -89,19 +100,34 @@ public class controllerFirebase {
     }
 
     @GetMapping("/allUsers")
-    public ResponseEntity<List<Map<String, Object>>> getAllFirebaseUsers() {
-        logger.info(">>> Endpoint /listAllUsers invocado");
+    public ResponseEntity<List<Map<String, Object>>> getAllFirestoreUsers() {
+        logger.info(">>> Endpoint /allUsers invocado");
 
         try {
-            List<Map<String, Object>> allUsers = firebaseUserService.getAllFirebaseUsers();
-            logger.info(">>> Usuarios obtenidos: {}", allUsers.size());
+            List<Map<String, Object>> allUsers = firebaseUserService.getAllFirestoreUsers();
+            logger.info(">>> Usuarios Firestore obtenidos: {}", allUsers.size());
             return ResponseEntity.ok(allUsers);
         } catch (Exception e) {
-            logger.error(">>> Error al obtener todos los usuarios: {}", e.getMessage(), e);
+            logger.error(">>> Error al obtener usuarios Firestore: {}", e.getMessage(), e);
             return ResponseEntity.internalServerError().build();
         }
     }
 
+    @DeleteMapping("/api/users/{document}")
+    public ResponseEntity<?> deleteUser(@PathVariable String document) {
+        userService.deleteUserByDocumentId(document);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/users/{document}")
+    public ResponseEntity<?> updateUser(@PathVariable String document, @RequestBody User updatedUser) {
+        try {
+            userService.updateUserByDocumentField(document, updatedUser);
+            return ResponseEntity.ok(updatedUser);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
 
 // Clase para recibir el token en el request
