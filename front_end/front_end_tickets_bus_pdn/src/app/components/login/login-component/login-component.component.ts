@@ -25,23 +25,28 @@ export class LoginComponentComponent {
       });
     }
   
-    send() {
-      console.log("presionaste login")
-      console.log(this.loginForm.value)
-      if (this.loginForm.valid) {
-        this.userService.login(this.loginForm.value).subscribe(
-          response => {
-            alert('Login exitoso');
-            this.router.navigate(['/menu']);
-          },
-          error => {
-            alert('Error al registrar usuario: ' + error.error);
-          }
-        );
-      } else {
-        alert('Formulario inválido');
-      }
+
+  send() {
+    console.log("presionaste login");
+    console.log(this.loginForm.value);
+
+    if (this.loginForm.valid) {
+      const email = this.loginForm.get('email')?.value;
+      const password = this.loginForm.get('password')?.value;
+
+      this.userService.login(email, password).subscribe(
+        response => {
+          alert('Login exitoso');
+          this.router.navigate(['/menu']);
+        },
+        error => {
+          alert('Error al iniciar sesión: ' + error.message);
+        }
+      );
+    } else {
+      alert('Formulario inválido');
     }
+  }
 
     loginGoogle(event: Event){
       this.authService.loginWithGoogle()
@@ -54,9 +59,23 @@ export class LoginComponentComponent {
           alert("Ha ocurrido un error " + err)
         })
     }
-  
+
   goToRegister(event: Event) {
     event.preventDefault(); 
     this.router.navigate(['/createAccount']);
   }
+  
+  loginGithub(event: Event){
+    this.authService.loginWithGitHub()
+      .then(userCredentials => {
+        alert("Inicio de sesion exitoso ")
+        event.preventDefault(); 
+        this.router.navigate(['/menu']);
+      })
+      .catch(err => {
+        alert("Ha ocurrido un error " + err)
+      })
+  }
+  
 }
+

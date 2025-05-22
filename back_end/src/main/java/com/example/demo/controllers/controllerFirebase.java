@@ -48,7 +48,7 @@ public class controllerFirebase {
             return ResponseEntity.status(401).body(errorResponse);
         }
     }
-
+  
     @GetMapping("/listUsersProvider/{provider}")
     public ResponseEntity<List<Map<String, Object>>> getUsersByProvider(@PathVariable String provider) {
         logger.info(">>> Endpoint /listUsersProvider/{} invocado", provider);
@@ -62,7 +62,6 @@ public class controllerFirebase {
             return ResponseEntity.internalServerError().build();
         }
     }
-
 }
 
 // Clase para recibir el token en el request

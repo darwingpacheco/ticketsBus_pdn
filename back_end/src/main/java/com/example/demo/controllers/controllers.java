@@ -2,6 +2,11 @@ package com.example.demo.controllers;
 
 import com.example.demo.data.User;
 import com.example.demo.services.UserService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import java.util.Optional;
 
 @RestController
@@ -16,6 +25,7 @@ import java.util.Optional;
 public class controllers {
     @Autowired
     private UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(controllers.class);
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
@@ -40,7 +50,6 @@ public class controllers {
             return ResponseEntity.badRequest().body("Credenciales incorrectas");
         }
     }
-
 
     @GetMapping("/allUsers")
     public List<User> getAllUsers() {
@@ -71,4 +80,28 @@ public class controllers {
         }
     }
 
+    @PostMapping("/github")
+    public ResponseEntity<?> authenticateWithGitHub(@RequestBody TokenRequests tokenRequest) {
+        logger.info(">>> Iniciando autenticación con GitHub...");
+        logger.debug("Token recibido: {}", tokenRequest.getToken());
+
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(tokenRequest.getToken());
+            String uid = decodedToken.getUid();
+            String email = decodedToken.getEmail();
+
+            logger.info(">>> Usuario autenticado con GitHub. UID: {}, Email: {}", uid, email);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario autenticado con GitHub");
+            response.put("email", email);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error(">>> Error al verificar token de GitHub: {}", e.getMessage(), e);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Token inválido o expirado.");
+            return ResponseEntity.status(401).body(errorResponse);
+        }
+    }
 }

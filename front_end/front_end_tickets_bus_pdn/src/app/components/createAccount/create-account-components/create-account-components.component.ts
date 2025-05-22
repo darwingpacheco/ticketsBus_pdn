@@ -40,10 +40,10 @@ export class CreateAccountComponentsComponent {
 
     if (this.registerForm.valid) {
       this.userService.register(this.registerForm.value).subscribe(
-        response => {
+        (response: any) => {
           alert('Registro exitoso');
         },
-        error => {
+        (error: any) => {
           alert('Error al registrar usuario: ' + error.error);
         }
       );
