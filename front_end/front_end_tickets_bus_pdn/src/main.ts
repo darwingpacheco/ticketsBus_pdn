@@ -9,14 +9,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponentComponent } from './app/components/login/login-component/login-component.component';
 import { CreateAccountComponentsComponent } from './app/components/createAccount/create-account-components/create-account-components.component';
 import { environment } from './environments/environments';
+import { MenuComponentComponent } from './app/components/menu-component/menu-component.component';
 import { importProvidersFrom } from '@angular/core';
+import { appConfig } from './app/app.config';
 
-const routes: Routes = [
-  { path: 'login', component: LoginComponentComponent },
-  { path: 'createAccount', component: CreateAccountComponentsComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-];
+bootstrapApplication(AppComponent, appConfig)
+  .catch((err) => console.error(err));
 
+  const routes: Routes = [
+    { path: 'login', component: LoginComponentComponent },
+    { path: 'createAccount', component: CreateAccountComponentsComponent },
+    { path: 'menu', component: MenuComponentComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+  ];
+  
 bootstrapApplication(AppComponent, {
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),

@@ -13,8 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import java.util.Optional;
 
 @RestController
@@ -48,28 +51,33 @@ public class controllers {
         }
     }
 
-    @PostMapping("/github")
-    public ResponseEntity<?> authenticateWithGitHub(@RequestBody TokenRequests tokenRequest) {
-        logger.info(">>> Iniciando autenticación con GitHub...");
-        logger.debug("Token recibido: {}", tokenRequest.getToken());
+    @GetMapping("/allUsers")
+    public List<User> getAllUsers() {
+        return userService.findAll();
+    }
 
-        try {
-            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(tokenRequest.getToken());
-            String uid = decodedToken.getUid();
-            String email = decodedToken.getEmail();
+    @DeleteMapping("/{document}")
+    public ResponseEntity<?> deleteUser(@PathVariable String document) {
+        userService.deleteById(document);
+        return ResponseEntity.ok().build();
+    }
 
-            logger.info(">>> Usuario autenticado con GitHub. UID: {}, Email: {}", uid, email);
+    @PutMapping("/{document}")
+    public ResponseEntity<?> updateUser(@PathVariable String document, @RequestBody User updatedUser) {
+        Optional<User> userOptional = userService.findById(document);
 
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Usuario autenticado con GitHub");
-            response.put("email", email);
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+            existingUser.setName(updatedUser.getName());
+            existingUser.setLast_name(updatedUser.getLast_name());
+            existingUser.setEmail(updatedUser.getEmail());
+            // No actualizar la contraseña ni el documento aquí
 
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            logger.error(">>> Error al verificar token de GitHub: {}", e.getMessage(), e);
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Token inválido o expirado.");
-            return ResponseEntity.status(401).body(errorResponse);
+            userService.save(existingUser);
+            return ResponseEntity.ok(existingUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
     }
+
 }
