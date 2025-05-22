@@ -112,7 +112,7 @@ register(userData: any): Observable<any> {
 
   // Obtener todos los usuarios locales
   getLocalUsers() {
-    return this.http.get<any[]>(`${this.baseUrl}/allUsers`);
+    return this.http.get<any[]>(`http://localhost:8080/tests/allUsers`);
   }
 
   // Eliminar usuario por documento
