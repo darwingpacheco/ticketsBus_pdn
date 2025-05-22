@@ -90,7 +90,10 @@ register(userData: any): Observable<any> {
 
   return from(promise);
 }
-
+  recoverPassword(email: string): Promise<void> {
+    return sendPasswordResetEmail(this.auth, email);
+  }
+  
   // Login con email y contraseña
   login(email: string, password: string): Observable<any> {
     return from(signInWithEmailAndPassword(this.auth, email, password));

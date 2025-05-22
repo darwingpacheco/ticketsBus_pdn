@@ -64,6 +64,12 @@ export class LoginComponentComponent {
     event.preventDefault(); 
     this.router.navigate(['/createAccount']);
   }
+
+  goToRecovery(event: Event) {
+    event.preventDefault(); 
+    this.router.navigate(['/recovery']);
+  }
+  
   
   loginGithub(event: Event){
     this.authService.loginWithGitHub()
