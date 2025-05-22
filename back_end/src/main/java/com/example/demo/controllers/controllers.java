@@ -13,8 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import java.util.Optional;
 
 @RestController
@@ -45,6 +48,35 @@ public class controllers {
             return ResponseEntity.ok(existingUser.get());
         } else {
             return ResponseEntity.badRequest().body("Credenciales incorrectas");
+        }
+    }
+
+    @GetMapping("/allUsers")
+    public List<User> getAllUsers() {
+        return userService.findAll();
+    }
+
+    @DeleteMapping("/{document}")
+    public ResponseEntity<?> deleteUser(@PathVariable String document) {
+        userService.deleteById(document);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{document}")
+    public ResponseEntity<?> updateUser(@PathVariable String document, @RequestBody User updatedUser) {
+        Optional<User> userOptional = userService.findById(document);
+
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+            existingUser.setName(updatedUser.getName());
+            existingUser.setLast_name(updatedUser.getLast_name());
+            existingUser.setEmail(updatedUser.getEmail());
+            // No actualizar la contraseña ni el documento aquí
+
+            userService.save(existingUser);
+            return ResponseEntity.ok(existingUser);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
         }
     }
 

@@ -1,0 +1,53 @@
+<div class="container">
+    <h2>Seleccionar Método de Autenticación</h2>
+    <select [(ngModel)]="selectedAuthMethod" (change)="onAuthMethodChange()">
+      <option value="google">Google</option>
+      <option value="facebook">Facebook</option>
+      <option value="github">GitHub</option>
+      <option value="local">BD Local</option>
+    </select>
+    
+<table *ngIf="users.length">
+  <thead>
+    <tr>
+      <th *ngIf="selectedAuthMethod === 'local'">Documento</th>
+      <th *ngIf="selectedAuthMethod === 'local'">Nombre</th>
+      <th *ngIf="selectedAuthMethod === 'local'">Apellido</th>
+      <th>Email</th>
+      <th *ngIf="selectedAuthMethod !== 'local'">Proveedor</th>
+      <th *ngIf="selectedAuthMethod === 'local'">Acciones</th>
+    </tr>
+  </thead>
+<tbody>
+  <tr *ngFor="let user of users">
+    <td *ngIf="selectedAuthMethod === 'local'">
+      <input *ngIf="editingUser === user" [(ngModel)]="user.document" />
+      <span *ngIf="editingUser !== user">{{ user.document }}</span>
+    </td>
+    <td *ngIf="selectedAuthMethod === 'local'">
+      <input *ngIf="editingUser === user" [(ngModel)]="user.name" />
+      <span *ngIf="editingUser !== user">{{ user.name }}</span>
+    </td>
+    <td *ngIf="selectedAuthMethod === 'local'">
+      <input *ngIf="editingUser === user" [(ngModel)]="user.last_name" />
+      <span *ngIf="editingUser !== user">{{ user.last_name }}</span>
+    </td>
+    <td *ngIf="selectedAuthMethod === 'local'">
+      <input *ngIf="editingUser === user" [(ngModel)]="user.email" />
+      <span *ngIf="editingUser !== user">{{ user.email }}</span>
+    </td>
+    <td *ngIf="selectedAuthMethod !== 'local'">{{ user.email }}</td>
+    <td *ngIf="selectedAuthMethod !== 'local'">{{ user.provider }}</td>
+    <td *ngIf="selectedAuthMethod === 'local'" class="local-actions">
+      <button *ngIf="editingUser !== user" (click)="editUser(user)">Editar</button>
+      <button *ngIf="editingUser === user" (click)="saveUser(user)">Guardar</button>
+      <button *ngIf="editingUser === user" (click)="cancelEdit()">Cancelar</button>
+      <button (click)="deleteUser(user.document)">Eliminar</button>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+    <p *ngIf="!users.length" class="no-users-message">No hay usuarios disponibles.</p>
+  </div>
+  
