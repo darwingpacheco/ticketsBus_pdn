@@ -87,6 +87,21 @@ public class controllerFirebase {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/allUsers")
+    public ResponseEntity<List<Map<String, Object>>> getAllFirebaseUsers() {
+        logger.info(">>> Endpoint /listAllUsers invocado");
+
+        try {
+            List<Map<String, Object>> allUsers = firebaseUserService.getAllFirebaseUsers();
+            logger.info(">>> Usuarios obtenidos: {}", allUsers.size());
+            return ResponseEntity.ok(allUsers);
+        } catch (Exception e) {
+            logger.error(">>> Error al obtener todos los usuarios: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }
 
 // Clase para recibir el token en el request

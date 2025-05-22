@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.data.User;
+import com.example.demo.services.FirebaseUserService;
 import com.example.demo.services.UserService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
@@ -25,6 +26,7 @@ import java.util.Optional;
 public class controllers {
     @Autowired
     private UserService userService;
+
     private static final Logger logger = LoggerFactory.getLogger(controllers.class);
 
     @PostMapping("/register")
@@ -51,10 +53,6 @@ public class controllers {
         }
     }
 
-    @GetMapping("/allUsers")
-    public List<User> getAllUsers() {
-        return userService.findAll();
-    }
 
     @DeleteMapping("/{document}")
     public ResponseEntity<?> deleteUser(@PathVariable String document) {
