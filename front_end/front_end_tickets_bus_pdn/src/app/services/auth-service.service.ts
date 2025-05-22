@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { fetchSignInMethodsForEmail, GithubAuthProvider, linkWithCredential } from 'firebase/auth';
+import { from, Observable } from 'rxjs';
+import { fetchSignInMethodsForEmail, linkWithCredential } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { serverTimestamp } from '@angular/fire/firestore';
 
@@ -24,8 +24,6 @@ import {
   doc,
   setDoc,
 } from '@angular/fire/firestore';
-
-import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
