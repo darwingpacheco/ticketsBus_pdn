@@ -35,6 +35,7 @@ public class controllerFirebase {
             return ResponseEntity.status(401).body(errorResponse);
         }
     }
+    
 }
 
 // Clase para recibir el token en el request

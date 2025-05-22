@@ -56,9 +56,23 @@ send() {
           alert("Ha ocurrido un error " + err)
         })
     }
-  
+
   goToRegister(event: Event) {
     event.preventDefault(); 
     this.router.navigate(['/createAccount']);
   }
+  
+  loginGithub(event: Event){
+    this.authService.loginWithGitHub()
+      .then(userCredentials => {
+        alert("Inicio de sesion exitoso ")
+        event.preventDefault(); 
+        this.router.navigate(['/menu']);
+      })
+      .catch(err => {
+        alert("Ha ocurrido un error " + err)
+      })
+  }
+  
 }
+
