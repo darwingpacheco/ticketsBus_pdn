@@ -9,14 +9,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponentComponent } from './app/components/login/login-component/login-component.component';
 import { CreateAccountComponentsComponent } from './app/components/createAccount/create-account-components/create-account-components.component';
 import { environment } from './environments/environments';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { provideAuth, getAuth } from '@angular/fire/auth';
 import { MenuComponentComponent } from './app/components/menu-component/menu-component.component';
+import { importProvidersFrom } from '@angular/core';
+import { appConfig } from './app/app.config';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
-
-import { importProvidersFrom } from '@angular/core';
 
   const routes: Routes = [
     { path: 'login', component: LoginComponentComponent },

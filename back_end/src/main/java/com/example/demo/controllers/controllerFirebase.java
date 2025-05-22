@@ -48,6 +48,31 @@ public class controllerFirebase {
             return ResponseEntity.status(401).body(errorResponse);
         }
     }
+
+    @PostMapping("/github")
+    public ResponseEntity<?> authenticateWithGitHub(@RequestBody TokenRequests tokenRequest) {
+        logger.info(">>> Iniciando autenticación con GitHub...");
+        logger.debug("Token recibido: {}", tokenRequest.getToken());
+
+        try {
+            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(tokenRequest.getToken());
+            String uid = decodedToken.getUid();
+            String email = decodedToken.getEmail();
+
+            logger.info(">>> Usuario autenticado con GitHub. UID: {}, Email: {}", uid, email);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario autenticado con GitHub");
+            response.put("email", email);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error(">>> Error al verificar token de GitHub: {}", e.getMessage(), e);
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Token inválido o expirado.");
+            return ResponseEntity.status(401).body(errorResponse);
+        }
+    }
   
     @GetMapping("/listUsersProvider/{provider}")
     public ResponseEntity<List<Map<String, Object>>> getUsersByProvider(@PathVariable String provider) {

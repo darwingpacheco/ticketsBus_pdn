@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Auth, signInWithPopup, linkWithCredential, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signOut, user, getAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
-import { fetchSignInMethodsForEmail, GithubAuthProvider, linkWithCredential } from 'firebase/auth';
+import { fetchSignInMethodsForEmail, linkWithCredential } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { serverTimestamp } from '@angular/fire/firestore';
 
@@ -37,6 +35,7 @@ export class AuthService {
   private firestore = inject(Firestore);
   private baseUrl = 'http://localhost:8080/api/users';
   private baseUrlFirebase = 'http://localhost:8080/tests/google';
+  private baseUrlGithub = 'http://localhost:8080/tests/github';
 
   constructor(private http: HttpClient) {}
 
@@ -103,42 +102,6 @@ register(userData: any): Observable<any> {
     return from(sendPasswordResetEmail(this.auth, email));
   }
 
-  // Login con proveedores externos (Google, Facebook, Github)
-  loginWithProvider(provider: string) {
-    console.log('Iniciando login con proveedor:', provider);
-
-    let authProvider;
-
-    switch (provider) {
-      case 'google':
-        authProvider = new GoogleAuthProvider();
-        break;
-      case 'facebook':
-        authProvider = new FacebookAuthProvider();
-        break;
-      case 'github':
-        authProvider = new GithubAuthProvider();
-        break;
-      default:
-        console.error('Proveedor no soportado:', provider);
-        throw new Error('Proveedor no soportado');
-    }
-
-    return signInWithPopup(this.auth, authProvider)
-      .then(result => {
-        console.log('Autenticación exitosa con Firebase:', result.user.email);
-        return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`).toPromise();
-      })
-      .then(data => {
-        console.log('Respuesta del backend:', data);
-        return data;
-      })
-      .catch(error => {
-        console.error('Error en loginWithProvider:', error);
-        throw error;
-      });
-  }
-
   // Obtener usuarios por proveedor
   getUsersByProvider(provider: string) {
     return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
@@ -199,26 +162,6 @@ loginWithProvider(provider: string) {
     });
 }
 
-getUsersByProvider(provider: string) {
-  return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
-}
-
-  getFirebaseUsersByProvider(provider: string) {
-  return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
-}
-  
-  getLocalUsers() {
-    return this.http.get<any[]>('http://localhost:8080/api/users/allUsers');
-  }
-  
-  deleteUser(document: string) {
-    return this.http.delete(`http://localhost:8080/api/users/${document}`);
-  }
-
-  updateUser(user: any) {
-  return this.http.put(`http://localhost:8080/api/users/${user.document}`, user);
-}
-
   async loginWithGitHub() {
     const auth = getAuth();
     const provider = new GithubAuthProvider();
@@ -274,6 +217,6 @@ getUsersByProvider(provider: string) {
   }
   
   
-    private baseUrlGithub = 'http://localhost:8080/tests/github';
+    
 
 }
