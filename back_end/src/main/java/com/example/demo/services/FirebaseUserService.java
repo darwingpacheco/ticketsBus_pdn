@@ -1,5 +1,8 @@
 package com.example.demo.services;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.auth.ExportedUserRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -24,7 +27,6 @@ public class FirebaseUserService {
             while (page != null) {
                 for (ExportedUserRecord user : page.getValues()) {
 
-                    // ✅ providerData devuelve UserRecord.UserInfo[]
                     UserInfo[] providerDataArray = user.getProviderData();
                     List<UserInfo> providers = Arrays.asList(providerDataArray);
 
@@ -48,44 +50,29 @@ public class FirebaseUserService {
         return userList;
     }
 
-
-    public List<Map<String, Object>> getAllFirebaseUsers() {
+    public List<Map<String, Object>> getAllFirestoreUsers() {
         List<Map<String, Object>> userList = new ArrayList<>();
 
         try {
-            ListUsersPage page = FirebaseAuth.getInstance().listUsers(null);
             Firestore db = FirestoreClient.getFirestore();
 
-            while (page != null) {
-                for (ExportedUserRecord user : page.getValues()) {
+            // Obtener todos los documentos de la colección "users"
+            ApiFuture<QuerySnapshot> future = db.collection("users").get();
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
-                    UserInfo[] providerDataArray = user.getProviderData();
-                    List<UserInfo> providers = Arrays.asList(providerDataArray);
-                    String provider = providers.isEmpty() ? "unknown" : providers.get(0).getProviderId();
-
-                    // Leer datos de Firestore por UID
-                    DocumentSnapshot userDoc = db.collection("users").document(user.getUid()).get().get();
-
-                    Map<String, Object> userData = new HashMap<>();
-                    userData.put("uid", user.getUid());
-                    userData.put("email", user.getEmail());
-                    userData.put("provider", provider);
-
-                    // Agrega los campos personalizados si existen
-                    userData.put("document", userDoc.contains("document") ? userDoc.getString("document") : null);
-                    userData.put("name", userDoc.contains("name") ? userDoc.getString("name") : null);
-                    userData.put("last_name", userDoc.contains("last_name") ? userDoc.getString("last_name") : null);
-                    userData.put("phone", userDoc.contains("phone") ? userDoc.getString("phone") : null);
-
-                    userList.add(userData);
-                }
-                page = page.getNextPage();
+            for (QueryDocumentSnapshot doc : documents) {
+                Map<String, Object> userData = new HashMap<>();
+                userData.put("uid", doc.getId());
+                userData.put("email", doc.getString("email"));
+                userData.put("document", doc.getString("document"));
+                userData.put("name", doc.getString("name"));
+                userData.put("last_name", doc.getString("last_name"));
+                userData.put("phone", doc.getString("phone"));
+                userList.add(userData);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return userList;
     }
 

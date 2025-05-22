@@ -117,12 +117,12 @@ register(userData: any): Observable<any> {
 
   // Eliminar usuario por documento
   deleteUser(document: string) {
-    return this.http.delete(`${this.baseUrl}/${document}`);
+    return this.http.delete(`http://localhost:8080/tests/api/users/${document}`);
   }
 
   // Actualizar usuario
   updateUser(user: any) {
-    return this.http.put(`${this.baseUrl}/${user.document}`, user);
+    return this.http.put<any>(`http://localhost:8080/tests/api/users/${user.document}`, user);
   }
 
 loginWithProvider(provider: string) {
