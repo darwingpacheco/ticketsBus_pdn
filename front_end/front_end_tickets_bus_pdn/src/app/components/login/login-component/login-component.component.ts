@@ -25,22 +25,27 @@ export class LoginComponentComponent {
       });
     }
   
-    send() {
-      console.log("presionaste login")
-      console.log(this.loginForm.value)
-      if (this.loginForm.valid) {
-        this.userService.login(this.loginForm.value).subscribe(
-          response => {
-            alert('Registro exitoso');
-          },
-          error => {
-            alert('Error al registrar usuario: ' + error.error);
-          }
-        );
-      } else {
-        alert('Formulario inválido');
+send() {
+  console.log("presionaste login");
+  console.log(this.loginForm.value);
+
+  if (this.loginForm.valid) {
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    this.userService.login(email, password).subscribe(
+      response => {
+        alert('Login exitoso');
+        this.router.navigate(['/menu']);
+      },
+      error => {
+        alert('Error al iniciar sesión: ' + error.message);
       }
-    }
+    );
+  } else {
+    alert('Formulario inválido');
+  }
+}
 
     loginGoogle(){
       this.authService.loginWithGoogle()
