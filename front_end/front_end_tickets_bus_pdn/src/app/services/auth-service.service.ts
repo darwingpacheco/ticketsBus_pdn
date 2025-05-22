@@ -1,27 +1,47 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, user, getAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { serverTimestamp } from '@angular/fire/firestore';
+
+import {
+  Auth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  GithubAuthProvider,
+  signOut,
+  user,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from '@angular/fire/auth';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  Firestore,
+  doc,
+  setDoc,
+} from '@angular/fire/firestore';
+
+import { from, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private auth = inject(Auth);
+  private firestore = inject(Firestore);
   private baseUrl = 'http://localhost:8080/api/users';
   private baseUrlFirebase = 'http://localhost:8080/tests/google';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
+  // Login con Google usando popup y envía token al backend
   async loginWithGoogle() {
-    const auth = getAuth();
     const provider = new GoogleAuthProvider();
 
     try {
-      const result = await signInWithPopup(auth, provider);
-      const idToken = await result.user.getIdToken(); // Obtiene el token de Firebase
+      const result = await signInWithPopup(this.auth, provider);
+      const idToken = await result.user.getIdToken();
 
-      // Envía el token al backend
       return this.http.post(this.baseUrlFirebase, { token: idToken }).toPromise();
     } catch (error) {
       console.error('Error en el login con Google', error);
@@ -29,19 +49,111 @@ export class AuthService {
     }
   }
 
+  // Logout
   logout(): Promise<void> {
     return signOut(this.auth);
   }
 
+  // Observable del usuario autenticado
   getUser(): Observable<any> {
     return user(this.auth);
   }
 
-  register(user: any) {
-    return this.http.post(`${this.baseUrl}/register`, user);
+register(userData: any): Observable<any> {
+  const { email, password, name, last_name, document, phone } = userData;
+
+  const promise = createUserWithEmailAndPassword(this.auth, email, password)
+    .then(async (userCredential) => {
+      const uid = userCredential.user?.uid;
+      if (!uid) throw new Error('UID no disponible');
+
+      try {
+        await setDoc(doc(this.firestore, 'users', uid), {
+          name,
+          last_name,
+          email,
+          document,
+          phone,
+          createdAt: serverTimestamp(),
+        });
+      } catch (firestoreError) {
+        console.error('Firestore setDoc error:', firestoreError);
+        throw firestoreError;
+      }
+
+      return { success: true };
+    });
+
+  return from(promise);
+}
+
+  // Login con email y contraseña
+  login(email: string, password: string): Observable<any> {
+    return from(signInWithEmailAndPassword(this.auth, email, password));
   }
 
-  login(credentials: any) {
-    return this.http.post(`${this.baseUrl}/login`, credentials);
+  // Enviar correo para recuperar contraseña
+  sendPasswordResetEmail(email: string): Observable<any> {
+    return from(sendPasswordResetEmail(this.auth, email));
+  }
+
+  // Login con proveedores externos (Google, Facebook, Github)
+  loginWithProvider(provider: string) {
+    console.log('Iniciando login con proveedor:', provider);
+
+    let authProvider;
+
+    switch (provider) {
+      case 'google':
+        authProvider = new GoogleAuthProvider();
+        break;
+      case 'facebook':
+        authProvider = new FacebookAuthProvider();
+        break;
+      case 'github':
+        authProvider = new GithubAuthProvider();
+        break;
+      default:
+        console.error('Proveedor no soportado:', provider);
+        throw new Error('Proveedor no soportado');
+    }
+
+    return signInWithPopup(this.auth, authProvider)
+      .then(result => {
+        console.log('Autenticación exitosa con Firebase:', result.user.email);
+        return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`).toPromise();
+      })
+      .then(data => {
+        console.log('Respuesta del backend:', data);
+        return data;
+      })
+      .catch(error => {
+        console.error('Error en loginWithProvider:', error);
+        throw error;
+      });
+  }
+
+  // Obtener usuarios por proveedor
+  getUsersByProvider(provider: string) {
+    return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
+  }
+
+  getFirebaseUsersByProvider(provider: string) {
+    return this.http.get<any[]>(`http://localhost:8080/tests/listUsersProvider/${provider}`);
+  }
+
+  // Obtener todos los usuarios locales
+  getLocalUsers() {
+    return this.http.get<any[]>(`${this.baseUrl}/allUsers`);
+  }
+
+  // Eliminar usuario por documento
+  deleteUser(document: string) {
+    return this.http.delete(`${this.baseUrl}/${document}`);
+  }
+
+  // Actualizar usuario
+  updateUser(user: any) {
+    return this.http.put(`${this.baseUrl}/${user.document}`, user);
   }
 }
