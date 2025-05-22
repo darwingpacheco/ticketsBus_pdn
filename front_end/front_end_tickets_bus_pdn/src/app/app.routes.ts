@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponentComponent } from './components/login/login-component/login-component.component';
 import { CreateAccountComponentsComponent } from './components/createAccount/create-account-components/create-account-components.component';
 import { MenuComponentComponent } from './components/menu-component/menu-component.component';
+import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
 
 export const routes: Routes = [
     {
@@ -20,5 +21,9 @@ export const routes: Routes = [
       {
         path: 'menu',
         component: MenuComponentComponent
+      },
+      {
+        path: 'recovery',
+        component: RecoveryPasswordComponent
       }
 ];

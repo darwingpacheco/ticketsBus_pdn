@@ -12,6 +12,7 @@ import { environment } from './environments/environments';
 import { MenuComponentComponent } from './app/components/menu-component/menu-component.component';
 import { importProvidersFrom } from '@angular/core';
 import { appConfig } from './app/app.config';
+import { RecoveryPasswordComponent } from './app/components/recovery-password/recovery-password.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
@@ -19,6 +20,7 @@ bootstrapApplication(AppComponent, appConfig)
   const routes: Routes = [
     { path: 'login', component: LoginComponentComponent },
     { path: 'createAccount', component: CreateAccountComponentsComponent },
+    { path: 'recovery', component: RecoveryPasswordComponent },
     { path: 'menu', component: MenuComponentComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
   ];
